@@ -8,10 +8,12 @@ type TEventTypes = "SIGN_OUT" | "SIGN_UP";
 type PostMessageFunction = ({ event, message }: { event: TEventTypes; message: string }) => void;
 
 export interface Webkit {
-  signOutChannel: {
-    postMessage: PostMessageFunction;
-  };
-  signUpChannel: {
-    postMessage: PostMessageFunction;
+  messageHandlers: {
+    signOutChannel: {
+      postMessage: PostMessageFunction;
+    };
+    signUpChannel: {
+      postMessage: PostMessageFunction;
+    };
   };
 }
