@@ -1,19 +1,17 @@
 declare global {
   interface Window {
     webkit?: Webkit;
+    isIOSWebView: boolean;
   }
 }
 
-type TEventTypes = "SIGN_OUT" | "SIGN_UP";
-type PostMessageFunction = ({ event, message }: { event: TEventTypes; message: string }) => void;
-
-export interface Webkit {
+type TEventTypes = "SIGN_OUT" | "SIGN_UP" | "ROUTER_EVENT";
+interface Webkit {
   messageHandlers: {
-    signOutChannel: {
-      postMessage: PostMessageFunction;
-    };
-    signUpChannel: {
-      postMessage: PostMessageFunction;
+    IOSbridge: {
+      postMessage: any;
     };
   };
 }
+
+export type PostMessageTypes = ({ type, message }: { type: string; message: any }) => void;
