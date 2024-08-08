@@ -12,11 +12,20 @@ export default function Home() {
   const router = useAppRouter();
   const { isWebView, device } = useWebView();
   const [isSwift, setIsSwift] = useState(false);
+  // console.log("isSwift: ", isSwift);
 
   const handleClick = () => {
     // window.webkit.messageHandlers.signOutChannel.postMessage({ event: "SIGN_OUT", message: "asd" });
     window.webkit?.messageHandlers.IOSbridge.postMessage(JSON.stringify({ age: "3" }));
   };
+
+  useEffect(() => {
+    setIsSwift(true);
+    return () => {
+      console.log("클린업");
+      setIsSwift(false);
+    };
+  }, []);
 
   return (
     <>
@@ -27,11 +36,14 @@ export default function Home() {
       <Main>
         <button onClick={() => router.push("/content")}>컨텐츠 페이지</button>
         <button onClick={() => window.open("https://www.example.com", "_blank")}>새창</button>
+        <button onClick={() => setIsSwift((prev) => !prev)}>클린업</button>
+        {isSwift ? <div>ok</div> : <div>no</div>}
 
         <Box>
           <a href="https://www.naver.com" target="_blank" rel="noopener noreferrer">
             네이버로 이동
           </a>
+          <button onClick={() => alert("안녕")}>얼럿</button>
           <a href="http://www.prefinc.com/html/main/main" target="_blank" rel="noopener noreferrer">
             프래프
           </a>

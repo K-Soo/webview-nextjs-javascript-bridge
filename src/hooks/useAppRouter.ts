@@ -21,12 +21,19 @@ export default function useAppRouter() {
 
   const push = async (url: string, as?: Url, options?: TransitionOptions) => {
     if (!isWebView) {
-      return await router.push(url, as, options);
+      await router.push(url, as, options);
     }
 
     if (device === "IOS") {
       sendRouterEvent({ path: `${BASE_URL}${url}` });
     }
+  };
+
+  const back = async (): Promise<void> => {
+    if (!isWebView) {
+      router.back();
+    }
+    sendRouterEvent({ path: "back", data: {} });
   };
 
   return {
@@ -35,5 +42,6 @@ export default function useAppRouter() {
     events: router.events,
     pathname: router.pathname,
     query: router.query,
+    back: router.back,
   };
 }
